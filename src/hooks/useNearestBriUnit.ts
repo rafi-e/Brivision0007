@@ -2,17 +2,23 @@
 import { useState, useEffect } from "react";
 import {
   briLocations,
-  type BriUnit,
   USER_LOCATION_SIMULATION,
   MAX_RADIUS_KM,
 } from "../data/briLocations";
+
+export interface BriUnit {
+  name: string;
+  type: string;
+  latitude: number;
+  longitude: number;
+}
 
 interface LocationData {
   name: string;
   isFound: boolean;
 }
 
-// Fungsi Haversine untuk menghitung jarak antara dua koordinat (dalam km)
+// Hitung jarak antara dua titik menggunakan rumus Haversine (dalam km)
 const haversineDistance = (
   lat1: number,
   lon1: number,
@@ -23,11 +29,10 @@ const haversineDistance = (
   const dLat = (lat2 - lat1) * (Math.PI / 180);
   const dLon = (lon2 - lon1) * (Math.PI / 180);
   const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLat / 2) ** 2 +
     Math.cos(lat1 * (Math.PI / 180)) *
       Math.cos(lat2 * (Math.PI / 180)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+      Math.sin(dLon / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 };
@@ -39,73 +44,57 @@ export const useNearestBriUnit = (): LocationData => {
   });
 
   useEffect(() => {
-    // --- Bagian 1: Mendapatkan Lokasi Pengguna ---
-    const getUserLocation = () => {
-      if (navigator.geolocation) {
-        // Menggunakan lokasi nyata browser
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            findNearestUnit(
-              position.coords.latitude,
-              position.coords.longitude
-            );
-          },
-          // Jika gagal (misal, user menolak atau timeout)
-          (error) => {
-            console.error("Geolocation Error:", error.message);
-            // Fallback ke lokasi simulasi jika gagal mendapatkan lokasi nyata
-            findNearestUnit(
-              USER_LOCATION_SIMULATION.latitude,
-              USER_LOCATION_SIMULATION.longitude
-            );
-          },
-          { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
-        );
-      } else {
-        console.warn("Geolocation tidak didukung browser.");
-        // Fallback ke lokasi simulasi
-        findNearestUnit(
+    // Coba dapatkan lokasi pengguna, fallback ke simulasi jika gagal
+    const getLocation = () => {
+      if (!navigator.geolocation) {
+        console.warn("Geolocation tidak didukung.");
+        findNearest(
           USER_LOCATION_SIMULATION.latitude,
           USER_LOCATION_SIMULATION.longitude
         );
+        return;
       }
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => findNearest(pos.coords.latitude, pos.coords.longitude),
+        (err) => {
+          console.error("Geolocation error:", err.message);
+          findNearest(
+            USER_LOCATION_SIMULATION.latitude,
+            USER_LOCATION_SIMULATION.longitude
+          );
+        },
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+      );
     };
 
-    // --- Bagian 2: Mencari Unit Terdekat ---
-    const findNearestUnit = (userLat: number, userLon: number) => {
-      let closestUnit: BriUnit | null = null;
-      let shortestDistance = Infinity;
+    // Cari unit BRI terdekat dalam radius 1 km
+    const findNearest = (userLat: number, userLon: number) => {
+      let closest: BriUnit | null = null;
+      let minDistance = Infinity;
 
       briLocations.forEach((unit) => {
-        const distance = haversineDistance(
+        const dist = haversineDistance(
           userLat,
           userLon,
           unit.latitude,
           unit.longitude
         );
-
-        // Cek jika jarak kurang dari radius maksimum (1 km)
-        if (distance <= MAX_RADIUS_KM && distance < shortestDistance) {
-          shortestDistance = distance;
-          closestUnit = unit;
+        if (dist <= MAX_RADIUS_KM && dist < minDistance) {
+          minDistance = dist;
+          closest = unit;
         }
       });
 
-      if (closestUnit) {
-        setLocation({
-          name: `${closestUnit.name.toUpperCase()}`,
-          isFound: true,
-        });
+      if (closest) {
+        const { name } = closest; // Ambil nama langsung dari unit terdekat
+        setLocation({ name, isFound: true });
       } else {
-        // Default jika tidak ada yang ditemukan dalam radius 1km
-        setLocation({
-          name: "BRI", // Default Hardcode
-          isFound: false,
-        });
+        setLocation({ name: "BRI", isFound: false });
       }
     };
 
-    getUserLocation();
+    getLocation();
   }, []);
 
   return location;

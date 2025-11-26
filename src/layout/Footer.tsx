@@ -13,7 +13,7 @@ export const Footer: React.FC<FooterProps> = ({ briBlue, nearestUnitName, }) => 
       className={`${briBlue} text-white py-1 px-2 text-center text-sm font-semibold`}
     >
       <Marquee gradient={false} speed={50}>
-        <div className="mx-8 whitespace-nowrap text-2xl">
+        <div className="mx-8 whitespace-nowrap text-2xl tracking-widest">
           SELAMAT DATANG DI BRI {nearestUnitName}, MELAYANI DENGAN SETULUS HATI
         </div>
       </Marquee>
