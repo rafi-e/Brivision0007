@@ -90,7 +90,7 @@ export const useNearestBriUnit = (): LocationData => {
         const { name } = closest; // Ambil nama langsung dari unit terdekat
         setLocation({ name, isFound: true });
       } else {
-        setLocation({ name: "BRI", isFound: false });
+        setLocation({ name: "...", isFound: false });
       }
     };
 
