@@ -20,7 +20,7 @@ export const Header: React.FC<HeaderProps> = ({
     <>
       {/* Top Header Section */}
       <header
-        className={`${briBlue} mt-5 px-4 2xl:p-5 2xl:pb-1 py-2 flex justify-between items-center text-sm text-white`}
+        className={`${briBlue} 2xl:mt-5 px-4 2xl:p-5 2xl:pb-1 py-2 flex justify-between items-center text-sm text-white`}
       >
         <div className="flex items-center">
           {/* BRI Logo Placeholder */}
