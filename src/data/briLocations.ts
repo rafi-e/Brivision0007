@@ -181,7 +181,7 @@ export const briLocations: BriUnit[] = [
     type: "Unit",
     name: "Unit Kebondalem",
     latitude: -8.484987266279454,
-    longitude: 114.1320511374311,  // Corrected from 14.132... (likely a typo)
+    longitude: 114.1320511374311, // Corrected from 14.132... (likely a typo)
   },
   {
     type: "Unit",
@@ -191,13 +191,13 @@ export const briLocations: BriUnit[] = [
   },
   {
     type: "Unit",
-    name: "Unit Ngerambe",
+    name: "Unit Ngrambe",
     latitude: -7.512802651675682,
     longitude: 111.20254577945455,
   },
   {
-    type: "KK Puspa",
-    name: "KK Puspa",
+    type: "KK",
+    name: "KK Puspa Dunia",
     latitude: -8.327565337879719,
     longitude: 114.10545358899773,
   },
