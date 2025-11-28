@@ -32,7 +32,7 @@ export default function Brivision() {
   const currentRateSet: RateSection[] = rateSets[currentRateSetIndex];
 
   return (
-    <div className={`min-h-screen ${briBlue} font-sans overflow-y-auto scrollbar-hide`}>
+    <div className={`min-h-screen ${briBlue} font-sans overflow-hidden`}>
       <div className="mx-auto shadow-2xl overflow-hidden">
         {/* Header Section */}
         <Header
@@ -43,9 +43,9 @@ export default function Brivision() {
         />
 
         {/* Main Content Area: Deposit Rates and Advertisement */}
-        <main className="grid grid-cols-1 lg:grid-cols-12 gap-4 px-4 py-2">
+        <main className="max-h-[500px] 2xl:max-h-[680px] flex justify-center items-stretch px-2 2xl:px-7 py-2 gap-2 2xl:gap-5 ">
           {/* Left Column: Deposit Rates (Span 5 columns on large screens) */}
-          <div className="lg:col-span-5 space-y-4">
+          <div className="flex flex-col basis-1/3 gap-2 2xl:">
             <RateDisplaySection
               currentRateSet={currentRateSet}
               currentRateSetIndex={currentRateSetIndex}
@@ -53,8 +53,8 @@ export default function Brivision() {
           </div>
 
           {/* Right Column: Advertisement (Span 7 columns on large screens) */}
-          <div className="lg:col-span-7 bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden relative min-h-[400px]">
-            <div className="flex bg-cover bg-center bg-black h-full w-full inset-0">
+          <div className="basis-2/3 bg-white border-2 2xl:border-5 border-gray-500 rounded-xl 2xl:rounded-2xl  overflow-hidden  shadow-xl">
+            <div className="flex justify-center items-center bg-cover bg-center bg-black h-full w-full inset-0">
               <VideoBri />
             </div>
           </div>

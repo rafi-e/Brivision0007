@@ -60,7 +60,7 @@ export default function VideoBri() {
     <div
       // Tambahkan tabindex agar div dapat difokuskan untuk menangkap event keydown
       tabIndex={0}
-      className="aspect-video overflow-hidden rounded-lg relative cursor-pointer focus:outline-none"
+      className="aspect-video rounded-lg relative cursor-pointer focus:outline-none"
       onDoubleClick={handleDoubleClick} // Lampirkan double-click handler ke container
     >
       <video
@@ -74,7 +74,7 @@ export default function VideoBri() {
         // Selalu mulai muted agar autoPlay bekerja, dikontrol oleh state
         muted={isMuted}
         playsInline
-        className="w-full h-full object-fit"
+        className="w-full h-full object-cover"
       >
         Browser Anda tidak mendukung tag video.
       </video>
@@ -82,7 +82,7 @@ export default function VideoBri() {
       {/* Pesan Overlay (Hanya ditampilkan ketika isMuted adalah true) */}
       {isMuted && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/50 transition-opacity duration-300 pointer-events-none">
-          <div className="p-4 bg-white text-black text-center rounded-lg shadow-xl font-bold text-lg sm:text-xl border-4 border-blue-500">
+          <div className="p-4 2xl:p-10 bg-white text-black text-center rounded-lg 2xl:rounded-2xl shadow-xl font-bold text-lg sm:text-xl 2xl:text-3xl border-4 2xl:border-8 border-blue-500 tracking-wider">
             Tekan Enter untuk aktifkan suara
           </div>
         </div>

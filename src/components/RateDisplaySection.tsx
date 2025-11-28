@@ -22,7 +22,7 @@ export const RateDisplaySection: React.FC<RateDisplaySectionProps> = ({
         <div
           // Key yang berubah akan memaksa transisi/re-render untuk animasi
           key={`${section.title}-${currentRateSetIndex}-${index}`} 
-          className="transition-opacity duration-1000 ease-in-out" 
+          className="h-full w-full grid transition-opacity duration-1000 ease-in-out " 
         >
           <RateTable section={section} briBlue={briBlue} />
         </div>

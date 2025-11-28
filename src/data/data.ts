@@ -64,7 +64,7 @@ const britamaBisnisRates: RateItem[] = [
 const giroRates: RateItem[] = [
   { nominal: "> 10 JT s.d 100 JT", rate: "0,25 %" },
   { nominal: "> 20 JT s.d 500 JT", rate: "0,50 %" },
-  { nominal: "> 500 JTd 1 M", rate: "0,75 %" },
+  { nominal: "> 500 JT s.d 1 M", rate: "0,75 %" },
   { nominal: "> 1 M", rate: "1,25 %" },
 ];
 
